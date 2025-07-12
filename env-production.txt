@@ -1,0 +1,81 @@
+# Database Configuration (Neon)
+DATABASE_URL=postgres://neondb_owner:npg_45cOwziLrlpJ@ep-nameless-fog-adxcc8gp-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require
+DATABASE_URL_UNPOOLED=postgresql://neondb_owner:npg_45cOwziLrlpJ@ep-nameless-fog-adxcc8gp.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require
+
+# Neon Database Parameters
+PGHOST=ep-nameless-fog-adxcc8gp-pooler.c-2.us-east-1.aws.neon.tech
+PGHOST_UNPOOLED=ep-nameless-fog-adxcc8gp.c-2.us-east-1.aws.neon.tech
+PGUSER=neondb_owner
+PGDATABASE=neondb
+PGPASSWORD=npg_45cOwziLrlpJ
+
+# Vercel Postgres Templates
+POSTGRES_URL=postgres://neondb_owner:npg_45cOwziLrlpJ@ep-nameless-fog-adxcc8gp-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require
+POSTGRES_URL_NON_POOLING=postgres://neondb_owner:npg_45cOwziLrlpJ@ep-nameless-fog-adxcc8gp.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require
+POSTGRES_USER=neondb_owner
+POSTGRES_HOST=ep-nameless-fog-adxcc8gp-pooler.c-2.us-east-1.aws.neon.tech
+POSTGRES_PASSWORD=npg_45cOwziLrlpJ
+POSTGRES_DATABASE=neondb
+POSTGRES_URL_NO_SSL=postgres://neondb_owner:npg_45cOwziLrlpJ@ep-nameless-fog-adxcc8gp-pooler.c-2.us-east-1.aws.neon.tech/neondb
+POSTGRES_PRISMA_URL=postgres://neondb_owner:npg_45cOwziLrlpJ@ep-nameless-fog-adxcc8gp-pooler.c-2.us-east-1.aws.neon.tech/neondb?connect_timeout=15&sslmode=require
+
+# Neon Auth environment variables
+NEXT_PUBLIC_STACK_PROJECT_ID=61575868-153b-477c-a6e5-ed637e75bc50
+NEXT_PUBLIC_STACK_PUBLISHABLE_CLIENT_KEY=pck_fqw2zsg37w0zhq6etz7zegzjhwm1mrmtj7s4t0f21h7eg
+STACK_SECRET_SERVER_KEY=ssk_tbtfrsr5wp3m2v2f63x7mxp1w7jph5s0a2f46f3nfsfy8
+
+# JWT Configuration
+JWT_SECRET=b7894a6cba20365c57176c7b1a1312d48db291a697d50586ce35c5a48f537b07cbbb8b6b8ccbb7fadcf15dcd81ee34d503586adf8a662435eb5089ee5b8303fd
+JWT_EXPIRES_IN=7d
+
+# Server Configuration
+PORT=5000
+NODE_ENV=production
+
+# RunwayML API Configuration
+RUNWAYML_API_KEY=your-runwayml-api-key
+RUNWAYML_BASE_URL=https://api.runwayml.com/v1
+
+# Instagram Graph API Configuration
+INSTAGRAM_APP_ID=your-instagram-app-id
+INSTAGRAM_APP_SECRET=your-instagram-app-secret
+INSTAGRAM_REDIRECT_URI=https://your-domain.com/api/instagram/callback
+
+# Redis Configuration (for queue management)
+REDIS_HOST=localhost
+REDIS_PORT=6379
+REDIS_PASSWORD=
+REDIS_URL=redis://localhost:6379
+
+# File Upload Configuration
+UPLOAD_DIR=./uploads
+MAX_FILE_SIZE=10485760
+
+# CDN Configuration (Cloudinary)
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+
+# Monitoring and Logging
+LOG_LEVEL=info
+SENTRY_DSN=your-sentry-dsn
+DATADOG_API_KEY=your-datadog-api-key
+
+# Email Configuration (Optional)
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_USER=your-email@gmail.com
+SMTP_PASS=your-app-password
+
+# Frontend Configuration
+REACT_APP_API_URL=https://your-api-domain.com
+REACT_APP_CDN_URL=https://res.cloudinary.com/your-cloud-name
+
+# Security
+CORS_ORIGIN=https://your-frontend-domain.com
+RATE_LIMIT_WINDOW_MS=900000
+RATE_LIMIT_MAX_REQUESTS=100
+
+# Analytics (Optional)
+GOOGLE_ANALYTICS_ID=your-ga-id
+MIXPANEL_TOKEN=your-mixpanel-token 
