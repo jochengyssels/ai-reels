@@ -1,0 +1,60 @@
+name: Deploy to Vercel
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      NODE_ENV: production
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+      RUNWAYML_API_KEY: ${{ secrets.RUNWAYML_API_KEY }}
+      INSTAGRAM_APP_ID: ${{ secrets.INSTAGRAM_APP_ID }}
+      INSTAGRAM_APP_SECRET: ${{ secrets.INSTAGRAM_APP_SECRET }}
+      CLOUDINARY_CLOUD_NAME: ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+      CLOUDINARY_API_KEY: ${{ secrets.CLOUDINARY_API_KEY }}
+      CLOUDINARY_API_SECRET: ${{ secrets.CLOUDINARY_API_SECRET }}
+      SENTRY_DSN: ${{ secrets.SENTRY_DSN }}
+      REDIS_URL: ${{ secrets.REDIS_URL }}
+      JWT_SECRET: ${{ secrets.JWT_SECRET }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - name: Use Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install dependencies (root)
+        run: npm install
+      - name: Install dependencies (server)
+        run: cd server && npm install
+      - name: Install dependencies (client)
+        run: cd client && npm install
+      - name: Lint
+        run: cd server && npm run lint || true
+      - name: Type Check
+        run: cd server && npx tsc --noEmit
+      - name: Run Tests
+        run: cd server && npm test || true
+      - name: Build Frontend
+        run: cd client && npm run build
+      - name: Generate Prisma Client
+        run: cd server && npx prisma generate
+      - name: Run Prisma Migrations
+        run: cd server && npx prisma migrate deploy
+      - name: Deploy to Vercel
+        run: npx vercel --token $VERCEL_TOKEN --prod --yes
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }} 

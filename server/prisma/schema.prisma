@@ -1,0 +1,164 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  username  String   @unique
+  password  String
+  firstName String?
+  lastName  String?
+  avatar    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  videos    Video[]
+  settings  Settings?
+  analytics Analytics[]
+  queue     GenerationQueue[]
+
+  @@map("users")
+}
+
+model Video {
+  id              String    @id @default(cuid())
+  title           String
+  description     String?
+  prompt          String
+  status          VideoStatus @default(PENDING)
+  duration        Int?
+  thumbnail       String?
+  videoUrl        String?
+  runwayJobId     String?
+  instagramPostId String?
+  width           Int       @default(1080)
+  height          Int       @default(1920)
+  fps             Int       @default(30)
+  quality         String    @default("high")
+  tags            String[]
+  category        String?
+  language        String    @default("en")
+  views           Int       @default(0)
+  likes           Int       @default(0)
+  comments        Int       @default(0)
+  shares          Int       @default(0)
+  // Analytics fields
+  impressions     Int?
+  reach           Int?
+  saves           Int?
+  engagementRate  Float?
+  viralScore      Float?
+  viralityCategory String?
+  analyticsUpdatedAt DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  generatedAt     DateTime?
+  postedAt        DateTime?
+  userId          String
+
+  // Relations
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  analytics Analytics[]
+
+  @@map("videos")
+}
+
+model Settings {
+  id                    String   @id @default(cuid())
+  instagramConnected    Boolean  @default(false)
+  instagramAccountId    String?
+  instagramAccessToken  String?
+  defaultWidth          Int      @default(1080)
+  defaultHeight         Int      @default(1920)
+  defaultFps            Int      @default(30)
+  defaultQuality        String   @default("high")
+  defaultLanguage       String   @default("en")
+  autoPost              Boolean  @default(false)
+  postSchedule          String?
+  defaultCaption        String?
+  defaultHashtags       String[]
+  emailNotifications    Boolean  @default(true)
+  pushNotifications     Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  userId                String   @unique
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("settings")
+}
+
+model Analytics {
+  id      String   @id @default(cuid())
+  date    DateTime @default(now())
+  metric  String
+  value   Int
+  platform String  @default("instagram")
+  userId  String
+  videoId String?
+  // Detailed analytics fields
+  impressions     Int?
+  reach           Int?
+  likes           Int?
+  comments        Int?
+  shares          Int?
+  saves           Int?
+  engagementRate  Float?
+  viralScore      Float?
+  viralityCategory String?
+  recordedAt      DateTime @default(now())
+
+  // Relations
+  user  User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  video Video? @relation(fields: [videoId], references: [id], onDelete: SetNull)
+
+  @@map("analytics")
+}
+
+model GenerationQueue {
+  id        String   @id @default(cuid())
+  prompt    String
+  imageUrl  String
+  status    QueueStatus @default(PENDING)
+  priority  Int      @default(0)
+  attempts  Int      @default(0)
+  maxAttempts Int    @default(3)
+  error     String?
+  result    Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId    String
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("generation_queue")
+}
+
+enum VideoStatus {
+  PENDING
+  GENERATING
+  COMPLETED
+  FAILED
+  POSTED
+  ARCHIVED
+}
+
+enum QueueStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  FAILED
+  CANCELLED
+} 

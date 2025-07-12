@@ -1,0 +1,26 @@
+# Instagram Reels Generator App Rules
+
+## Core Principles
+- Always follow React best practices and hooks conventions
+- Use TypeScript for type safety
+- Implement proper error handling for all API calls
+- Follow clean architecture patterns
+
+## Technology Stack
+- Frontend: React with TypeScript
+- Backend: Node.js with Express
+- Database: PostgreSQL with Prisma ORM
+- Video Generation: RunwayML API
+- Social Media: Instagram Graph API
+
+## File Structure
+- Components go in /components folder
+- API routes in /api folder
+- Utils and helpers in /utils folder
+- Types in /types folder
+
+## API Integration Guidelines
+- Always use environment variables for API keys
+- Implement proper error handling and retry logic
+- Use async/await for all API calls
+- Add request/response logging for debugging
