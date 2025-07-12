@@ -1,62 +1,30 @@
 {
   "version": 2,
-  "name": "ai-reels",
   "builds": [
     {
       "src": "server/src/index.ts",
-      "use": "@vercel/node",
-      "config": {
-        "includeFiles": ["server/src/**/*"]
-      }
+      "use": "@vercel/node"
     },
     {
-      "src": "client/package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "build"
-      }
+      "src": "client/build/**",
+      "use": "@vercel/static"
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/api/(.*)",
-      "dest": "/server/src/index.ts"
+      "source": "/api/(.*)",
+      "destination": "/server/src/index.ts"
     },
     {
-      "src": "/uploads/(.*)",
-      "dest": "/server/src/index.ts"
+      "source": "/uploads/(.*)",
+      "destination": "/server/src/index.ts"
     },
     {
-      "src": "/(.*)",
-      "dest": "/client/build/$1"
+      "source": "/(.*)",
+      "destination": "/client/build/$1"
     }
   ],
   "env": {
     "NODE_ENV": "production"
-  },
-  "functions": {
-    "server/src/index.ts": {
-      "maxDuration": 30
-    }
-  },
-  "regions": ["iad1"],
-  "headers": [
-    {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, PUT, DELETE, OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, Authorization"
-        }
-      ]
-    }
-  ]
+  }
 } 
